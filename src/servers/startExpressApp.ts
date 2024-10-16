@@ -9,6 +9,11 @@ const startExpressApp = async () => {
     const app = express();
 
     app.use(express.json());
+
+    app.get('/', (req, res) => {
+        res.send( '<h1> Welcome to the auth-system API </h1>')
+    })
+
     app.use(router);
 
     app.all('*', (_req, res) => {
