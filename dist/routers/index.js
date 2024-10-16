@@ -27,6 +27,8 @@ const express_1 = require("express");
 const user = __importStar(require("../controllers/index"));
 const helpers_1 = require("../helpers");
 const router = (0, express_1.Router)();
+router.get('/Oauth/google');
+router.get('/ouath/redirect/google');
 router.post('/auth/register', user.Register);
 router.post('/auth/verify', user.verifyOtp);
 router.post('/auth/login', user.Login);

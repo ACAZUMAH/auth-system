@@ -4,6 +4,10 @@ import { verifyAccessToken } from '../helpers';
 
 const router = Router();
 
+
+
+router.get('/Oauth/google')
+router.get('/ouath/redirect/google');
 router.post('/auth/register', user.Register);
 router.post('/auth/verify', user.verifyOtp);
 router.post('/auth/login', user.Login);
@@ -14,5 +18,7 @@ router.route('/profile')
 .put(verifyAccessToken, user.updateProfile);
 router.delete('/user/:id', verifyAccessToken, user.deleteUser);
 router.get('/public-data', user.getUsers);
+
+
 
 export default router;
