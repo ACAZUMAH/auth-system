@@ -10,7 +10,7 @@ import createHttpError from 'http-errors';
  * @returns error response
  */
 const errorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    console.log(err);
+    console.error(err);
     if (err instanceof createHttpError.HttpError) {
        return res.status(err.statusCode).json({ error: [{ message: err.message }] });
     }

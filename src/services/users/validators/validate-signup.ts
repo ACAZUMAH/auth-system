@@ -23,6 +23,7 @@ const validateData = async (data: UserType) => {
       email: { type: "string", format: "email" },
       phone: { type: "string", format: "phone" },
       password: { type: "string", minLength: 6 },
+      role: { type: "string", enum: ["user", "admin"] },
     },
     required: ["name", "email", "phone", "password"],
     additionalProperties: false,

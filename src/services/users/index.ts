@@ -37,7 +37,7 @@ export const findUserById = async (id: string | Types.ObjectId) =>{
     if(!Types.ObjectId.isValid(id)){
         throw new createHttpError.BadRequest('Invalid user id');
     }
-    return await user.findById(id, {password: 0, role: 0, is_authenticated: 0})
+    return await user.findById(id, {password: 0, is_authenticated: 0})
 };   
 
 /**
@@ -65,18 +65,17 @@ export const findByIdAndUpdate = async (id: string|Types.ObjectId, data?: UserTy
     if(!Types.ObjectId.isValid(id)){
         throw new createHttpError.BadRequest('Invalid user id');
     }
-    await validateUpdate(data as UserType);
-    if(data?.name){
-        return await user.findByIdAndUpdate(id, {$set: { name: data.name }});
-    }
-    if(data?.email){
-        return await user.findByIdAndUpdate(id, {$set: { email: data.email }});
-    }
-    if(data?.phone){
-        return await user.findByIdAndUpdate(id, {$set: { phone: data.phone }});
-    }
-    if(data?.role){
-        return await user.findByIdAndUpdate(id, {$set: { role: data.role }});
+    if(data){
+        await validateUpdate(data as UserType);
+        const updateFields: Partial<UserType> = {};
+        if(data?.name) updateFields.name = data.name;
+        if(data?.email) updateFields.email = data.email;
+        if(data?.phone) updateFields.phone = data.phone;
+        if(data?.role) updateFields.role = data.role;
+        if(Object.keys(updateFields).length > 0){
+            return await user
+            .findByIdAndUpdate(id, {$set: updateFields}, {new: true});
+        }
     }
     return await user.findByIdAndUpdate(id, {$set: { is_authenticated: true }});
 };
@@ -94,12 +93,4 @@ export const deleteUser = async (id: string | Types.ObjectId) => {
         throw new createHttpError.BadRequest('Invalid user id');
     }
     return await user.findByIdAndDelete(id);
-}
-export default {
-    createUser,
-    findUserById,
-    findUserByEmail,
-    findByIdAndUpdate,
-    findUsers,
-    deleteUser
-}
+};

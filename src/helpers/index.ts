@@ -28,7 +28,7 @@ export const verifyAccessToken = async (req:Request, res:Response, next: NextFun
     if(!token){
         return res.status(401).json({ success: false, message: 'Unauthorized' });
     };
-    verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, user) => {
+    verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, user: any) => {
         if(err){
             return res.status(403).json({ success: false, message: 'Unauthorized' });
         }

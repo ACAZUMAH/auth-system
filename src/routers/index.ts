@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import user from '../controllers/index';
+import * as user from '../controllers/index';
 import { verifyAccessToken } from '../helpers';
 
 const router = Router();
@@ -7,7 +7,7 @@ const router = Router();
 router.post('/auth/register', user.Register);
 router.post('/auth/verify', user.verifyOtp);
 router.post('/auth/login', user.Login);
-router.route('auth/assign-role')
+router.route('/assign-role/:id')
 .post(verifyAccessToken, user.assignRole);
 router.route('/profile')
 .get(verifyAccessToken, user.getProfile)

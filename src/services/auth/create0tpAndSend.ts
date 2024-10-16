@@ -4,7 +4,7 @@ import sendSms from './send-sms';
 import { generateOtp } from './generate-Otp';
 import { Types } from 'mongoose';
 import { genAccessToken } from '../../helpers';
-import { findByIdAndUpdate } from '../users';
+import { deleteUser, findByIdAndUpdate } from '../users';
 
 
 /**
@@ -35,8 +35,9 @@ export const createAndSendCode = async (id: string | Types.ObjectId, phone: stri
 export const verifyAndSendToken = async (code: string, dateNow: Date) => {
     const otp: any = await findByCodeAndDelete(code);
     if(dateNow > otp.expiresIn){
+        await deleteUser(otp.user)
         throw new createHttpError.BadRequest('OTP expired')
     } 
-    const update:any = findByIdAndUpdate(otp.user)
+    const update:any = await findByIdAndUpdate(otp.user)
     return await genAccessToken({ id: update._id });
 }
