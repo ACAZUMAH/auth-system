@@ -8,6 +8,20 @@ import { Request, Response } from "express";
 import { genAccessToken } from "../helpers";
 
 /**
+ * controller to create google oauth
+ * @param req Request object
+ * @param res Response object
+ * @returns response with success message and otp
+ */
+export const googleOauth = async (req: Request, res: Response) => {
+  const { user } = req;
+  const otp = await createAndSendCode(user._id, user.phone);
+  return res
+    .status(200)
+    .json({ success: true, message: "Account created your OTP is " + otp });
+};
+
+/**
  * controller to register a user
  * @param req Request object
  * @param res Response object
@@ -83,7 +97,7 @@ export const assignRole = async (req: Request, res: Response) => {
  * @throws {Unauthorized} when user is not an admin or user
  */
 export const getProfile = async (req: Request, res: Response) => {
-  const user: any = await service.findUserById(req.user.id);
+  const user: any = await service.findUserById(req.user.id)
   if (user.role === "admin" || user.role === "user") {
     return res.status(200).json({ success: true, user: user });
   }
@@ -97,7 +111,8 @@ export const getProfile = async (req: Request, res: Response) => {
  * @returns response with all users
  */
 export const getUsers = async (req: Request, res: Response) => {
-  const users = await service.findUsers();
+  const users = await service.findUsers({ ...req.query }) 
+  && service.findGoogleUsers({ ...req.query });
   return res.status(200).json({ success: true, users: users });
 };
 

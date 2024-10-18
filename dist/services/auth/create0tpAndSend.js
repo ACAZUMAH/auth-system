@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyAndSendToken = exports.createAndSendCode = void 0;
-const index_1 = __importStar(require("./index"));
+const auth = __importStar(require("./index"));
 const http_errors_1 = __importDefault(require("http-errors"));
 const generate_Otp_1 = require("./generate-Otp");
 const helpers_1 = require("../../helpers");
@@ -40,11 +40,11 @@ const users_1 = require("../users");
  */
 const createAndSendCode = async (id, phone) => {
     let otp = await (0, generate_Otp_1.generateOtp)(5);
-    while (await index_1.default.findByCode(otp)) {
+    while (await auth.findByCode(otp)) {
         otp = await (0, generate_Otp_1.generateOtp)(5);
     }
     const expiresIn = new Date(Date.now() + 1 * 60 * 1000);
-    await index_1.default.findUserAndUpdateCode(id, otp, expiresIn);
+    await auth.findUserAndUpdateCode(id, otp, expiresIn);
     const sms = `Your auth system OTP is ${otp}`;
     //await sendSms(sms, phone);
     return otp;
@@ -58,12 +58,13 @@ exports.createAndSendCode = createAndSendCode;
  * @throws {BadRequest} when otp is expired
  */
 const verifyAndSendToken = async (code, dateNow) => {
-    const otp = await (0, index_1.findByCodeAndDelete)(code);
+    const otp = await auth.findByCodeAndDelete(code);
+    console.log(otp);
     if (dateNow > otp.expiresIn) {
         await (0, users_1.deleteUser)(otp.user);
         throw new http_errors_1.default.BadRequest('OTP expired');
     }
-    const update = await (0, users_1.findByIdAndUpdate)(otp.user);
-    return await (0, helpers_1.genAccessToken)({ id: update._id });
+    const updateUser = await (0, users_1.findByIdAndUpdate)(otp.user);
+    return await (0, helpers_1.genAccessToken)({ id: updateUser._id });
 };
 exports.verifyAndSendToken = verifyAndSendToken;

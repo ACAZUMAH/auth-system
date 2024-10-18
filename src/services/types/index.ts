@@ -6,7 +6,7 @@ declare global {
             user?: authpayload | any;
         }
     }
-}
+};
 
 export interface UserType {
     name?: string;
@@ -14,10 +14,22 @@ export interface UserType {
     phone?: string;
     password?: string;
     role?: string;
-}
+};
 
 export interface authpayload {
     id: string | Types.ObjectId;
+};
+
+export interface oauthType {
+    googleId: string; 
+    email: string;
+    name: string; 
+    phone: string; 
+};
+
+export interface queryType {
+    page?: string;
+    limit?: string;
 }
 
 export { };

@@ -54,9 +54,3 @@ const findByCodeAndDelete = async (code) => {
     return schemas_1.auth.findOneAndDelete({ code });
 };
 exports.findByCodeAndDelete = findByCodeAndDelete;
-exports.default = {
-    createAuth: exports.createAuth,
-    findByCode: exports.findByCode,
-    findUserAndUpdateCode: exports.findUserAndUpdateCode,
-    findByCodeAndDelete: exports.findByCodeAndDelete
-};

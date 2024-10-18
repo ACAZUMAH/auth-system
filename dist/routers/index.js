@@ -22,13 +22,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user = __importStar(require("../controllers/index"));
 const helpers_1 = require("../helpers");
+require("../services/auth/oauth2/index");
+const passport_1 = __importDefault(require("passport"));
 const router = (0, express_1.Router)();
-router.get('/Oauth/google');
-router.get('/ouath/redirect/google');
+router.get('/oauth/google', passport_1.default.authenticate('google'));
+router.get('/oauth/google/redirect', passport_1.default.authenticate('google'), user.googleOauth);
 router.post('/auth/register', user.Register);
 router.post('/auth/verify', user.verifyOtp);
 router.post('/auth/login', user.Login);

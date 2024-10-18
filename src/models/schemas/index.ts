@@ -15,11 +15,17 @@ const authSchema = new Schema({
     expiresIn: { type: Date, default: Date.now() + 1 * 60 * 60000 },
 });
 
+const googleUserSchema = new Schema({
+    googleId: { type: String, required: true },
+    email: { type: String, required: true },
+    name: { type: String, required: true },
+    phone: { type: String },
+    role: { type: String, default: 'user' },
+    is_authenticated: { type: Boolean, default: false },
+},{ timestamps: true })
 
+export const oauth = model('googleUser', googleUserSchema)
 export const user = model('User', userSchema);
 export const auth = model('Auth', authSchema);
 
-export default{
-    user,
-    auth
-};  
+  
