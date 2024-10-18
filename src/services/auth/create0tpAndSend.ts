@@ -1,4 +1,4 @@
-import auth, { findByCodeAndDelete } from './index';
+import * as auth from './index';
 import createHttpError from 'http-errors';
 import sendSms from './send-sms';
 import { generateOtp } from './generate-Otp';
@@ -33,11 +33,11 @@ export const createAndSendCode = async (id: string | Types.ObjectId, phone: stri
  * @throws {BadRequest} when otp is expired
  */
 export const verifyAndSendToken = async (code: string, dateNow: Date) => {
-    const otp: any = await findByCodeAndDelete(code);
+    const otp: any = await auth.findByCodeAndDelete(code);
     if(dateNow > otp.expiresIn){
-        await deleteUser(otp.user)
-        throw new createHttpError.BadRequest('OTP expired')
-    } 
-    const update:any = await findByIdAndUpdate(otp.user)
-    return await genAccessToken({ id: update._id });
+        await deleteUser(otp.user);
+        throw new createHttpError.BadRequest('OTP expired');
+    }  
+    const updateUser: any = await findByIdAndUpdate(otp.user);
+    return await genAccessToken({ id: updateUser._id });
 }

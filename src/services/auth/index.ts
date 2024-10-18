@@ -49,14 +49,8 @@ export const findUserAndUpdateCode = async (
  */
 export const findByCodeAndDelete = async (code: string) =>{
   if(!await auth.findOne({ code })){
-    throw new createHttpError.NotFound('Invalid otp')
+    throw new createHttpError.NotFound('Invalid otp');
   }
-  return auth.findOneAndDelete({ code })
+  return auth.findOneAndDelete({ code });
 }
 
-export default {
-  createAuth,
-  findByCode,
-  findUserAndUpdateCode,
-  findByCodeAndDelete
-};

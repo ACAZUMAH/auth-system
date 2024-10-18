@@ -23,11 +23,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateProfile = exports.getUsers = exports.getProfile = exports.assignRole = exports.Login = exports.verifyOtp = exports.Register = void 0;
+exports.deleteUser = exports.updateProfile = exports.getUsers = exports.getProfile = exports.assignRole = exports.Login = exports.verifyOtp = exports.Register = exports.googleOauth = void 0;
 const helpers_1 = require("../helpers");
 const create0tpAndSend_1 = require("../services/auth/create0tpAndSend");
 const service = __importStar(require("../services/users"));
 const helpers_2 = require("../helpers");
+/**
+ * controller to create google oauth
+ * @param req Request object
+ * @param res Response object
+ * @returns response with success message and otp
+ */
+const googleOauth = async (req, res) => {
+    const { user } = req;
+    const otp = await (0, create0tpAndSend_1.createAndSendCode)(user._id, user.phone);
+    return res
+        .status(200)
+        .json({ success: true, message: "Account created your OTP is " + otp });
+};
+exports.googleOauth = googleOauth;
 /**
  * controller to register a user
  * @param req Request object
@@ -118,7 +132,8 @@ exports.getProfile = getProfile;
  * @returns response with all users
  */
 const getUsers = async (req, res) => {
-    const users = await service.findUsers();
+    const users = await service.findUsers({ ...req.query })
+        && service.findGoogleUsers({ ...req.query });
     return res.status(200).json({ success: true, users: users });
 };
 exports.getUsers = getUsers;
