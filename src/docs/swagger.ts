@@ -14,7 +14,7 @@ const swaggerOptions = {
         servers: ['https://auth-system-swart.vercel.app/']
         }
     },
-    apis: ['dist/routers/*.js']
+    apis: ['dist/routers/doc.js']
 }
 
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css"
