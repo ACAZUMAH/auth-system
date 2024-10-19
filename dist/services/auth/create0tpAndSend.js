@@ -59,7 +59,6 @@ exports.createAndSendCode = createAndSendCode;
  */
 const verifyAndSendToken = async (code, dateNow) => {
     const otp = await auth.findByCodeAndDelete(code);
-    console.log(otp);
     if (dateNow > otp.expiresIn) {
         await (0, users_1.deleteUser)(otp.user);
         throw new http_errors_1.default.BadRequest('OTP expired');

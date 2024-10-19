@@ -7,6 +7,7 @@ require("express-async-errors");
 const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
 const error_handler_1 = __importDefault(require("../middlewares/errors/error-handler"));
+const swagger_1 = __importDefault(require("../docs/swagger"));
 const index_1 = __importDefault(require("../routers/index"));
 require("../services/types");
 const passport_1 = __importDefault(require("passport"));
@@ -24,6 +25,7 @@ const startExpressApp = async () => {
         res.send('<h1> Welcome to the auth-system API </h1>');
     });
     app.use(index_1.default);
+    (0, swagger_1.default)(app);
     app.all('*', (_req, res) => {
         res.status(404).send('Unable to find the requested resource!');
     });
