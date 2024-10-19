@@ -566,6 +566,7 @@
  *                   example: "Internal server error"
  */
 
+
 /**
  * @swagger
  * /user/{id}:
@@ -582,8 +583,6 @@
  *           type: string
  *           example: Bearer <access_token>
  *         description: Bearer token for authentication
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -591,6 +590,8 @@
  *         schema:
  *           type: string
  *         description: The ID of the user to be deleted.
+ *      security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User successfully deleted.
