@@ -1,5 +1,10 @@
 /**
  * @swagger
+ * tags: Google OAuth
+ * description: Google authentication operations
+ */
+/**
+ * @swagger
  * /oauth/google:
  *   get:
  *     summary: Google OAuth login
@@ -66,6 +71,11 @@
  *                   type: string
  *                   description: A failure message indicating an internal error.
  *                   example: "Internal server error"
+ */
+/**
+ * @swagger
+ * tags: User Management
+ * description: User management operations
  */
 /**
  * @swagger

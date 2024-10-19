@@ -15,7 +15,11 @@ const swaggerOptions = {
             contact: {
                 name: 'Auth System'
             },
-            servers: ['http://localhost:3500']
+            servers: [
+                {
+                    url: 'http://localhost:3500'
+                }
+            ]
         }
     },
     apis: ['dist/**/*.js']
