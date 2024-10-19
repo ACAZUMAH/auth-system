@@ -401,7 +401,7 @@
  *         name: id
  *         schema:
  *           type: string
- *         description: The ID of the user whose profile is being updated (only required for admins).
+ *         description: The ID of the user profile to get (only required for admins).
  *     security:
  *       - bearerAuth: []
  *     responses:
