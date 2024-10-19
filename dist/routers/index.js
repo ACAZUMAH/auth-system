@@ -1,12 +1,17 @@
 "use strict";
 /**
  * @swagger
+ * tags:
+ *  - name: Authentication
+ *   description: Routes for user authentication
+ */
+/**
+ * @swagger
  * /oauth/google:
  *   get:
  *     summary: Google OAuth login
  *     description: Initiates the Google OAuth2 login process. The user is redirected to Google's login page.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     responses:
  *       302:
  *         description: Redirects to Google's OAuth login page.
@@ -59,8 +64,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   get:
  *     summary: Google OAuth callback
  *     description: Callback route for Google OAuth2 after successful authentication. This will complete the OAuth2 flow and create an account for the user, then send an OTP to their phone for verification.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     responses:
  *       200:
  *         description: Account successfully created, OTP sent for verification.
@@ -101,8 +105,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   post:
  *     summary: Register a new user
  *     description: This route registers a new user with the provided details and sends an OTP to the user's phone for verification.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -184,8 +187,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   post:
  *     summary: Verify OTP and issue token
  *     description: Verifies the OTP provided by the user and, if valid, issues a token for authentication.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -252,8 +254,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   post:
  *     summary: User login
  *     description: Authenticates a user by email and password, and returns a token upon successful authentication.
- *     tags:
- *       - Authentication
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
@@ -321,12 +322,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 /**
  * @swagger
+ * tags:
+ * - name: User Management
+ *  description: Routes for user management
+ */
+/**
+ * @swagger
  * /assign-role/{id}:
  *   post:
  *     summary: Assign a role to a user
  *     description: Assigns a specified role to a user. Only an admin can assign roles.
- *     tags:
- *       - User Management
+ *     tags: [User Management]
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -409,8 +415,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   get:
  *     summary: Get user profile (by user or admin)
  *     description: Retrieves the profile information of the authenticated user. Only users with the role of "admin" or "user" can access their profile.
- *     tags:
- *       - User Management
+ *     tags: [User Management]
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -491,8 +496,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   put:
  *     summary: Update user profile (by user or admin)
  *     description: Updates the profile information of the authenticated user. Admins can update any user's profile, while regular users can only update their own profile.
- *     tags:
- *       - User Management
+ *     tags: [User Management]
  *    parameters:
  *       - in: header
  *         name: Authorization
@@ -592,8 +596,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   delete:
  *     summary: Delete a user
  *     description: Deletes a user based on their ID. Only admins are authorized to delete users.
- *     tags:
- *       - User Management
+ *     tags: [User Management]
  *     parameters:
  *       - in: header
  *         name: Authorization
@@ -679,8 +682,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *   get:
  *     summary: Retrieve public user data
  *     description: Fetches a list of users, including those from Google, based on optional query parameters.
- *     tags:
- *       - User Management
+ *     tags: [User Management]
  *     parameters:
  *       - in: query
  *         name: name
@@ -759,9 +761,8 @@ router.post('/auth/verify', user.verifyOtp);
 router.post('/auth/login', user.Login);
 router.route('/assign-role/:id')
     .post(helpers_1.verifyAccessToken, user.assignRole);
-router.route('/profile')
-    .get(helpers_1.verifyAccessToken, user.getProfile)
-    .put(helpers_1.verifyAccessToken, user.updateProfile);
+router.get('/profile', helpers_1.verifyAccessToken, user.getProfile);
+router.put('/profile', helpers_1.verifyAccessToken, user.updateProfile);
 router.delete('/user/:id', helpers_1.verifyAccessToken, user.deleteUser);
 router.get('/public-data', user.getUsers);
 exports.default = router;
