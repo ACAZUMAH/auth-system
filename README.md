@@ -40,20 +40,46 @@
 </ul>
 
 <h2 id="installation">Installation</h2>
+
+<h3>Clone the repository</h3>
 <pre>
 <code>
-# Clone the repository
 git clone https://github.com/your-repo/project-name.git
+</code>
+</pre>
 
-# Navigate to the project directory
+
+<h3>Navigate to the project directory</h3>
+<pre>
+<code>
 cd project-name
+</code>
+</pre>
 
-# Install dependencies
+
+<h3>Install dependencies</h3>
+<pre>
+<code>
 npm install
+</code>
+</pre>
 
-# Create a .env file and add the necessary environment variables (MongoDB URI, JWT secret, etc.)
 
-# Start the development server
+<h3>Create a <code>.env</code> file and add the necessary environment variables (MongoDB URI, JWT secret, etc.)</h3>
+<pre>
+  <code>
+    MONGO_URI=your_mongodb_connection_string
+    ACCESS_TOKEN_SECRETE=your_jwt_secret
+    GOOGLE_CLIENT_ID=your_google_client_id
+    GOOGLE_CLIENT_SECRET=your_google_client_secret
+    GOOGLE_REDIRECT_URI=your_google_redirect_uri
+    SESSION_SECRET=your_session_secret
+  </code>
+</pre>
+
+<h3>Start the development server</h3>
+<pre>
+<code>
 npm run dev
 </code>
 </pre>
@@ -490,3 +516,6 @@ GET /public-data
     <li>Ensure to configure Passport.js for handling Google OAuth integration.</li>
     <li>JWT tokens are generated upon successful login or OTP verification for secure authentication.</li>
 </ul>
+
+<h2 id="license">📝 License</h2>
+<p>This project is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
