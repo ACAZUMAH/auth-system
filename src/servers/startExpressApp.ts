@@ -2,6 +2,7 @@ import 'express-async-errors';
 import express from 'express';
 import session from 'express-session';
 import errorHandler from '../middlewares/errors/error-handler';
+import setUpSwagger from '../docs/swagger';
 import router from '../routers/index';
 import '../services/types';
 import passport from 'passport';
@@ -21,6 +22,7 @@ const startExpressApp = async () => {
         res.send( '<h1> Welcome to the auth-system API </h1>')
     })
     app.use(router);
+    setUpSwagger(app);
     app.all('*', (_req, res) => {
         res.status(404).send('Unable to find the requested resource!');
     });
