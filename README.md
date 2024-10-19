@@ -3,29 +3,60 @@
 <p>This API provides user authentication, role management, and profile handling functionalities, including Google OAuth integration, user registration, and OTP-based verification.</p>
 
 <h2>Table of Contents</h2>
+<h2>Table of Contents</h2>
 <ul>
-    <li><a href="#api-endpoints">API Endpoints</a></li>
-    <ul>
-        <li><a href="#google-oauth">Google OAuth</a></li>
-        <li><a href="#authentication">Authentication</a></li>
-        <li><a href="#role-assignment">Role Assignment</a></li>
-        <li><a href="#profile">Profile</a></li>
-        <li><a href="#public-data">Public Data</a></li>
-        <li><a href="#user-management">User Management</a></li>
-    </ul>
-    <li><a href="#controllers">Controllers</a></li>
-    <ul>
-        <li><a href="#google-oauth-controller">Google OAuth</a></li>
-        <li><a href="#register-controller">Register User</a></li>
-        <li><a href="#verify-otp-controller">Verify OTP</a></li>
-        <li><a href="#login-controller">Login</a></li>
-        <li><a href="#assign-role-controller">Assign Role</a></li>
-        <li><a href="#get-profile-controller">Get Profile</a></li>
-        <li><a href="#update-profile-controller">Update Profile</a></li>
-        <li><a href="#delete-user-controller">Delete User</a></li>
-        <li><a href="#get-users-controller">Get All Users</a></li>
-    </ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#technologies-used">Technologies Used</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#api-documentation">API Documentation</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
 </ul>
+
+<h2 id="features">Features</h2>
+<ul>
+    <li>Google OAuth authentication</li>
+    <li>User registration with OTP verification</li>
+    <li>Login with email and password using JWT</li>
+    <li>Role assignment (Admin/User)</li>
+    <li>User profile management</li>
+    <li>Secure authentication and authorization with JWT</li>
+    <li>Access control based on user roles</li>
+</ul>
+<h2 id="technologies-used">Technologies Used</h2>
+<ul>
+    <li><strong>Node.js</strong> - JavaScript runtime environment</li>
+    <li><strong>Express.js</strong> - Web framework for Node.js</li>
+    <li><strong>TypeScript</strong> - Typed superset of JavaScript</li>
+    <li><strong>MongoDB</strong> - NoSQL database for user data storage</li>
+    <li><strong>Passport.js</strong> - Authentication middleware for Node.js (for Google OAuth)</li>
+    <li><strong>JWT</strong> - JSON Web Tokens for secure authentication</li>
+    <li><strong>Bcrypt</strong> - Password hashing for secure login</li>
+    <li><strong>Swagger UI</strong> - API documentation</li>
+    <li><strong>Vercel</strong> - Deployment platform</li>
+    <li>Other security libraries (Helmet, express-validator, etc.)</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+<pre>
+<code>
+# Clone the repository
+git clone https://github.com/your-repo/project-name.git
+
+# Navigate to the project directory
+cd project-name
+
+# Install dependencies
+npm install
+
+# Create a .env file and add the necessary environment variables (MongoDB URI, JWT secret, etc.)
+
+# Start the development server
+npm run dev
+</code>
+</pre>
 
 <h2 id="api-endpoints">API Endpoints</h2>
 
@@ -62,66 +93,390 @@
 <ul>
     <li><strong>DELETE</strong> <code>/user/:id</code> - Deletes a user by their ID. Protected by <code>verifyAccessToken</code>. Calls <code>deleteUser</code> controller.</li>
 </ul>
+<h2 id="usage">Usage</h2>
+<p>After setting up the environment and starting the server, you can use tools like Postman or Swagger UI to interact with the API:</p>
 
-<h2 id="controllers">Controllers</h2>
+<h3> Register a new user </h3>
+<p>To register a new user, send a <code>POST</code> request to <code>/auth/register</code> with the following request body:</p>
 
-<h3 id="google-oauth-controller">Google OAuth Controller</h3>
-<p><strong>Function</strong>: <code>googleOauth</code></p>
-<p>Initiates Google OAuth and sends an OTP to the user's phone upon successful account creation.</p>
-<p><strong>Response</strong>: <code>200 OK</code>: <code>{ success: true, message: "Account created your OTP is &lt;otp&gt;" }</code></p>
+<pre>
+<code>
+POST /auth/register
+Content-Type: application/json
 
-<h3 id="register-controller">Register Controller</h3>
-<p><strong>Function</strong>: <code>Register</code></p>
-<p>Registers a new user and sends an OTP to the provided phone number.</p>
-<p><strong>Response</strong>: <code>200 OK</code>: <code>{ success: true, message: "Account created your OTP is &lt;otp&gt;" }</code></p>
+{
+  "name": "johnyoung",
+  "email": "johnyoung@example.com",
+  "phone": "+123456789",
+  "password": "password123"
+}
+</code>
+</pre>
 
-<h3 id="verify-otp-controller">Verify OTP Controller</h3>
-<p><strong>Function</strong>: <code>verifyOtp</code></p>
-<p>Verifies the OTP code and returns a JWT token for authentication.</p>
-<p><strong>Response</strong>: <code>200 OK</code>: <code>{ success: true, token: &lt;token&gt; }</code></p>
+<p>Example Success Response (200):</p>
 
-<h3 id="login-controller">Login Controller</h3>
-<p><strong>Function</strong>: <code>Login</code></p>
-<p>Authenticates a user using their email and password, returning a JWT token if the credentials are valid.</p>
-<p><strong>Response</strong>:
-<code>200 OK</code>: <code>{ success: true, token: &lt;token&gt; }</code><br>
-<code>401 Unauthorized</code>: <code>{ success: false, message: "Invalid credentials" }</code></p>
+<pre>
+<code>
+{
+  "success": true,
+  "message": "Account created, your OTP is 123456"
+}
+</code>
+</pre>
 
-<h3 id="assign-role-controller">Assign Role Controller</h3>
-<p><strong>Function</strong>: <code>assignRole</code></p>
-<p>Assigns a role (admin/user) to another user based on their ID.</p>
-<p><strong>Response</strong>: 
-<code>200 OK</code>: <code>{ success: true, message: "Role assigned successfully" }</code><br>
-<code>403 Forbidden</code>: <code>{ success: false, message: "Unauthorized" }</code></p>
+<p>Example Error Response (400):</p>
 
-<h3 id="get-profile-controller">Get Profile Controller</h3>
-<p><strong>Function</strong>: <code>getProfile</code></p>
-<p>Retrieves the profile of the current logged-in user.</p>
-<p><strong>Response</strong>: 
-<code>200 OK</code>: <code>{ success: true, user: &lt;user_profile&gt; }</code><br>
-<code>403 Forbidden</code>: <code>{ success: false, message: "Unauthorized" }</code></p>
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Invalid request data"
+}
+</code>
+</pre>
 
-<h3 id="update-profile-controller">Update Profile Controller</h3>
-<p><strong>Function</strong>: <code>updateProfile</code></p>
-<p>Updates the profile of the current logged-in user (or another user if admin).</p>
-<p><strong>Response</strong>: 
-<code>200 OK</code>: <code>{ success: true, message: "Profile updated successfully" }</code><br>
-<code>403 Forbidden</code>: <code>{ success: false, message: "Unauthorized" }</code></p>
+<p>Example Error Response (500):</p>
 
-<h3 id="delete-user-controller">Delete User Controller</h3>
-<p><strong>Function</strong>: <code>deleteUser</code></p>
-<p>Deletes a user by their ID. Only accessible by admins.</p>
-<p><strong>Response</strong>: 
-<code>200 OK</code>: <code>{ success: true, message: "User deleted successfully" }</code><br>
-<code>403 Forbidden</code>: <code>{ success: false, message: "Unauthorized" }</code></p>
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
 
-<h3 id="get-users-controller">Get Users Controller</h3>
-<p><strong>Function</strong>: <code>getUsers</code></p>
-<p>Retrieves a list of all users, including those registered via Google OAuth.</p>
-<p><strong>Response</strong>: <code>200 OK</code>: <code>{ success: true, users: &lt;users_array&gt; }</code></p>
+<h3> User Login </h3>
+<p>To log in a user, send a <code>POST</code> request to <code>/auth/login</code> with the following request body:</p>
 
-<h2>Authentication and Authorization</h2>
-<p>All protected routes (i.e., requiring a logged-in user) are guarded using the <code>verifyAccessToken</code> middleware. This ensures that only users with valid JWT tokens can access those routes.</p>
+<pre>
+<code>
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "johnyoung@example.com",
+  "password": "password123"
+}
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+</code>
+</pre>
+
+<p>Example Error Response (401):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Invalid credentials"
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
+
+<h3> Verify OTP </h3>
+<p>To verify the OTP sent to the user, send a <code>POST</code> request to <code>/auth/verify</code> with the following request body:</p>
+
+<pre>
+<code>
+POST /auth/verify
+Content-Type: application/json
+
+{
+  "code": "123456"
+}
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+</code>
+</pre>
+
+<p>Example Error Response (400):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Invalid or expired OTP"
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
+
+<h3> Get user profile </h3>
+<p>To retrieve the profile of the authenticated user, send a <code>GET</code> request to <code>/profile</code> with the following headers:</p>
+
+<pre>
+<code>
+GET /profile
+Authorization: Bearer <access_token>
+query: id of the user to get (reuired for admins only)
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "user": {
+    "id": "60c72b2f9b1d8e2d8c2b97e9",
+    "email": "johnyoung@example.com",
+    "role": "user"
+  }
+}
+</code>
+</pre>
+
+<p>Example Error Response (403):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Unauthorized"
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
+
+<h3>Update a user profile </h3>
+<p>To update the authenticated user's profile or another user's profile (if you're an admin), send a <code>PUT</code> request to <code>/profile</code> with the following headers and request body:</p>
+
+<pre>
+<code>
+PUT /profile
+Authorization: Bearer <access_token>
+query: id of the user profile to update (required for admins only)
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com",
+  "name": "John Young",
+  "phone": "123-456-7890"
+}
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "message": {
+    "id": "60c72b2f9b1d8e2d8c2b97e9",
+    "email": "newemail@example.com",
+    "name": "John Young"
+  }
+}
+</code>
+</pre>
+
+<p>Example Error Response (403):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Unauthorized"
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
+
+<h3>Assign Role to User</h3>
+<p>To assign a role to a user, send a <code>POST</code> request to <code>/assign-role/{id}</code> with the following headers and request body:</p>
+
+<pre>
+<code>
+POST /assign-role/{id}
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+{
+  "role": "admin"
+}
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "message": "Role assigned successfully"
+}
+</code>
+</pre>
+
+<p>Example Error Response (403):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Unauthorized"
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
+
+<h3>Delete User</h3>
+<p>To delete a user by their ID, send a <code>DELETE</code> request to <code>/user/{id}</code> with the following headers:</p>
+
+<pre>
+<code>
+DELETE /user/{id}
+Authorization: Bearer <access_token>
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "message": "User deleted successfully"
+}
+</code>
+</pre>
+
+<p>Example Error Response (403):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Unauthorized"
+}
+</code>
+</pre>
+
+<p>Example Error Response (404):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "User not found"
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
+<h3>Example 8: Retrieve Public User Data</h3>
+<p>To retrieve public user data, send a <code>GET</code> request to <code>/public-data</code> with optional query parameters:</p>
+
+<pre>
+<code>
+GET /public-data
+</code>
+</pre>
+
+<p>Example Success Response (200):</p>
+
+<pre>
+<code>
+{
+  "success": true,
+  "users": [
+    // list of users
+  ]
+}
+</code>
+</pre>
+
+<p>Example Error Response (500):</p>
+
+<pre>
+<code>
+{
+  "success": false,
+  "message": "Internal server error"
+}
+</code>
+</pre>
 
 <h2>Error Handling</h2>
 <p>Each controller has built-in error handling:</p>
