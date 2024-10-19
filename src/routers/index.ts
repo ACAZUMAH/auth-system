@@ -1,10 +1,5 @@
 /**
  * @swagger
- * tags: Google OAuth
- * description: Google authentication operations
- */
-/**
- * @swagger
  * /oauth/google:
  *   get:
  *     summary: Google OAuth login
@@ -72,12 +67,6 @@
  *                   type: string
  *                   description: A failure message indicating an internal error.
  *                   example: "Internal server error"
- */
-
-/**
- * @swagger
- * tags: User Management
- * description: User management operations
  */
 
 /**
@@ -396,7 +385,7 @@
  * @swagger
  * /profile:
  *   get:
- *     summary: Get user profile
+ *     summary: Get user profile (by user or admin)
  *     description: Retrieves the profile information of the authenticated user. Only users with the role of "admin" or "user" can access their profile.
  *     tags:
  *       - User Management
@@ -408,6 +397,11 @@
  *           type: string
  *           example: Bearer <access_token>
  *         description: Bearer token for authentication
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         description: The ID of the user whose profile is being updated (only required for admins).
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -474,7 +468,7 @@
  * @swagger
  * /profile:
  *   put:
- *     summary: Update user profile
+ *     summary: Update user profile (by user or admin)
  *     description: Updates the profile information of the authenticated user. Admins can update any user's profile, while regular users can only update their own profile.
  *     tags:
  *       - User Management
@@ -486,9 +480,6 @@
  *           type: string
  *           example: Bearer <access_token>
  *         description: Bearer token for authentication
- *     security:
- *       - bearerAuth: []
- *     parameters:
  *       - in: query
  *         name: id
  *         schema:
@@ -513,6 +504,8 @@
  *                 type: string
  *                 description: The updated phone number of the user.
  *                 example: "123-456-7890"
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Profile successfully updated.
