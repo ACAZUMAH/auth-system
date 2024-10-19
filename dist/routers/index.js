@@ -2,8 +2,8 @@
 /**
  * @swagger
  * tags:
- *  - name: Authentication
- *   description: Routes for user authentication
+ *   - name: Authentication
+ *     description: Routes for user authentication
  */
 /**
  * @swagger
@@ -324,7 +324,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @swagger
  * tags:
  * - name: User Management
- *  description: Routes for user management
+ *   description: Routes for user management
  */
 /**
  * @swagger
@@ -497,7 +497,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *     summary: Update user profile (by user or admin)
  *     description: Updates the profile information of the authenticated user. Admins can update any user's profile, while regular users can only update their own profile.
  *     tags: [User Management]
- *    parameters:
+ *     parameters:
  *       - in: header
  *         name: Authorization
  *         required: true
@@ -605,14 +605,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *           type: string
  *           example: Bearer <access_token>
  *         description: Bearer token for authentication
- *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
  *         description: The ID of the user to be deleted.
- *      security:
+ *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
@@ -683,22 +682,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *     summary: Retrieve public user data
  *     description: Fetches a list of users, including those from Google, based on optional query parameters.
  *     tags: [User Management]
- *     parameters:
- *       - in: query
- *         name: name
- *         schema:
- *           type: string
- *         description: Filter users by name.
- *       - in: query
- *         name: email
- *         schema:
- *           type: string
- *         description: Filter users by email.
- *       - in: query
- *         name: role
- *         schema:
- *           type: string
- *         description: Filter users by their role (e.g., "admin", "user").
  *     responses:
  *       200:
  *         description: Successfully retrieved the list of users.
