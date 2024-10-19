@@ -22,7 +22,7 @@ const startExpressApp = async () => {
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     app.get('/', (req, res) => {
-        res.send('<h1> Welcome to the auth-system API </h1>');
+        res.send('<h1> Welcome to the auth-system API </h1><a href="/api-docs">API Documentation</a>');
     });
     app.use(index_1.default);
     (0, swagger_1.default)(app);

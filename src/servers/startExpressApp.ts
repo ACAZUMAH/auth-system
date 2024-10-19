@@ -19,7 +19,8 @@ const startExpressApp = async () => {
     app.use(passport.session());
 
     app.get('/', (req, res) => {
-        res.send( '<h1> Welcome to the auth-system API </h1>')
+        res.send( 
+            '<h1> Welcome to the auth-system API </h1><a href="/api-docs">API Documentation</a>')
     })
     app.use(router);
     setUpSwagger(app);
