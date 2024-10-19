@@ -11,10 +11,10 @@ const swaggerOptions = {
         contact: {
             name: 'Auth System'
         },
-        servers: ['https://auth-system-swart.vercel.app/']
+        servers: ['http://localhost:3500']
         }
     },
-    apis: ['dist/routers/doc.js']
+    apis: ['dist/**/*.js']
 }
 
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css"
