@@ -11,6 +11,14 @@ const swagger_1 = __importDefault(require("../docs/swagger"));
 const index_1 = __importDefault(require("../routers/index"));
 require("../services/types");
 const passport_1 = __importDefault(require("passport"));
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+const xss_clean_1 = __importDefault(require("xss-clean"));
+const helmet_1 = __importDefault(require("helmet"));
+const cors_1 = __importDefault(require("cors"));
+const limiter = (0, express_rate_limit_1.default)({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+});
 const startExpressApp = async () => {
     const app = (0, express_1.default)();
     app.use(express_1.default.json());
@@ -21,6 +29,10 @@ const startExpressApp = async () => {
     }));
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
+    app.use((0, cors_1.default)());
+    app.use((0, helmet_1.default)());
+    app.use((0, xss_clean_1.default)());
+    app.use(limiter);
     app.get('/', (req, res) => {
         res.send('<h1> Welcome to the auth-system API </h1><a href="/api-docs">API Documentation</a>');
     });
