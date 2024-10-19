@@ -423,7 +423,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *         name: id
  *         schema:
  *           type: string
- *         description: The ID of the user whose profile is being updated (only required for admins).
+ *         description: The ID of the user profile to get (only required for admins).
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -602,8 +602,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *           type: string
  *           example: Bearer <access_token>
  *         description: Bearer token for authentication
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -611,6 +609,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *         schema:
  *           type: string
  *         description: The ID of the user to be deleted.
+ *      security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User successfully deleted.
