@@ -95,12 +95,12 @@
  *           schema:
  *             type: object
  *             required:
- *               - username
+ *               - name
  *               - email
  *               - phone
  *               - password
  *             properties:
- *               username:
+ *               name:
  *                 type: string
  *                 description: The user's username.
  *                 example: "johnyoung"
@@ -316,6 +316,13 @@
  *     tags:
  *       - User Management
  *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Bearer <access_token>
+ *         description: Bearer token for authentication
  *       - in: path
  *         name: id
  *         required: true
@@ -393,6 +400,14 @@
  *     description: Retrieves the profile information of the authenticated user. Only users with the role of "admin" or "user" can access their profile.
  *     tags:
  *       - User Management
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Bearer <access_token>
+ *         description: Bearer token for authentication
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -463,6 +478,14 @@
  *     description: Updates the profile information of the authenticated user. Admins can update any user's profile, while regular users can only update their own profile.
  *     tags:
  *       - User Management
+ *    parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Bearer <access_token>
+ *         description: Bearer token for authentication
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -558,6 +581,14 @@
  *     description: Deletes a user based on their ID. Only admins are authorized to delete users.
  *     tags:
  *       - User Management
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: Bearer <access_token>
+ *         description: Bearer token for authentication
  *     security:
  *       - bearerAuth: []
  *     parameters:
