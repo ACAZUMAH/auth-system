@@ -3,7 +3,6 @@
 <p>This API provides user authentication, role management, and profile handling functionalities, including Google OAuth integration, user registration, and OTP-based verification.</p>
 
 <h2>Table of Contents</h2>
-<h2>Table of Contents</h2>
 <ul>
     <li><a href="#features">Features</a></li>
     <li><a href="#technologies-used">Technologies Used</a></li>
